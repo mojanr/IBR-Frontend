@@ -1,8 +1,8 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +30,62 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+} */
+
+@layer tailwind-base, antd;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .app-decorator-underline {
+    @apply after:content-[''] after:block after:relative after:bottom-0 after:left-0 after:w-7 after:h-[5px] after:bg-primary after:rounded-full;
+  }
+}
+
+/* antd form label */
+.ant-form-item .ant-form-item-label label {
+  @apply font-bold;
+}
+
+/* antd menu */
+ul.ant-menu[role="menu"] {
+  @apply border-none !important;
+}
+
+li.ant-menu-submenu-selected div[role="menuitem"],
+li[role="menuitem"].ant-menu-item-selected {
+  @apply font-bold;
+}
+
+li[role="menuitem"].ant-menu-item-selected {
+  @apply before:content-[''] before:block before:absolute before:left-0 before:w-[5px] before:h-5 before:rounded-md before:bg-primary;
+}
+
+li.ant-menu-submenu div[role="menuitem"] {
+  @apply pl-3 !important;
+}
+li[role="menuitem"].ant-menu-item {
+  @apply pl-7 !important;
+} 
+
+/* li.ant-menu-item-only-child {
+  @apply pl-3 !important;
+} */
+
+/* antd radio */
+.ant-radio-group.ant-radio-group-outline.radio-full {
+  @apply w-full flex flex-row !important;
+}
+
+.ant-radio-group.ant-radio-group-outline.radio-full label {
+  @apply flex-1 !important;
+}
+
+.ant-radio-group.ant-radio-group-outline.radio-full label.ant-radio-button-wrapper.ant-radio-button-wrapper-checked {
+  @apply bg-primary text-white !important;
 }

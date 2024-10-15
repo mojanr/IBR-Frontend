@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import 'simplebar-react/dist/simplebar.min.css';
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import AntdStyleProvider from "@/core/provider/AntdStyleProvider";
+import AntdConfigProvider from "@/core/provider/AntdConfigProvider";
+import { fontDefault } from "@/core/config/font";
+import { cn } from "@/core/lib/util";
+import NextProgressBarProvider from "../core/provider/NextProgressBarProvider";
+import ReactQueryProvider from "@/core/provider/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +20,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* <!-- css file contains @layer xxx, antd; --> */}
+        <link rel="stylesheet" href="./global.css" />
+        {/* <!-- or write @layer xxx, antd; in html directly --> */}
+        <style>
+          @layer tailwind-base,, antd;
+        </style>
+
+        {/* <!-- SSR Injection style --> */}
+        <style>
+          @layer antd {
+            /** ... */
+          }
+        </style>
+      </head>
+      <body
+        className={cn(
+          "min-h-screen font-sans antialiased",
+          fontDefault.variable
+        )}
+      >
+        <AntdRegistry>
+          <AntdConfigProvider>
+            <AntdStyleProvider>
+              <NextProgressBarProvider>
+                <ReactQueryProvider>
+                  {children}
+                </ReactQueryProvider>
+              </NextProgressBarProvider>
+            </AntdStyleProvider>
+          </AntdConfigProvider>
+        </AntdRegistry>
+      </body>
     </html>
   );
 }
